@@ -48,8 +48,37 @@ var runLargeRandom = function () {
     }
 };
 
+
+var runLargeRandomWithStability = function () {
+    var a = [];
+    for (var i = 0; i < 15000; i++) {
+        a.push({value: 0|Math.random() * 100, index:i});
+    }
+    var lessThan = function (a, b) {
+        return a.value < b.value;
+    };
+    sort(a, lessThan);
+    var failures = [];;
+    for (var i = 1; i < a.length; i++) {
+        if (a[i-1].value > a[i].value) {
+            failures.push({at: i, pre: a[i-1], cur: a[i]});
+        } else if (a[i-1].value === a[i].value && a[i-1].index > a[i].index) {
+            failures.push({at: i, pre: a[i-1], cur: a[i]});
+        }
+    }
+    if (failures.length === 0) {
+        console.log("large sort success");
+    } else {
+        console.log("large sort failed");
+        console.log(failures);
+    }
+};
+
+
+
 if (require.main === module) {
     runBasic();
     runMiniSize();
-    runLargeRandom();
+    //runLargeRandom();
+    runLargeRandomWithStability();
 }
