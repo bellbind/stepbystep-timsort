@@ -116,11 +116,9 @@ var whenMerge = function (state) {
     
     var curRun = state.runStack[state.runStack.length - 1];
     var preRun = state.runStack[state.runStack.length - 2];
-    if (state.runStack.length === 2) {
-        return curRun.length < preRun.length;
-    }
+    if (state.runStack.length === 2) return preRun.length <= curRun.length;
     var pre2Run = state.runStack[state.runStack.length - 3];
-    return preRun.length + curRun.length < pre2Run.length;
+    return pre2Run.length <= preRun.length + curRun.length;
 };
 
 // merge neighbor
