@@ -54,8 +54,9 @@ than [first,lastIndex] representation.
 - whole array: [0,length).
 
 Our codes use customizable comparator for array elements.
-Sorts use the **relation "less than"(a<b)** as comparator, 
-not use three state comparator(-1,0,1).
+Sorts use the **relation "less than"(a < b)** as comparator, 
+not use three state comparator(-1,0,1). 
+"a <= b" is made as "!(b < a)".
 
     bool lessThan(a, b)
 
