@@ -3,7 +3,7 @@
 
 var MIN_GALLOP = 7;
 
-// ===  [SPLIT IMPROVEMENTS] == //
+// === [SPLIT IMPROVEMENTS] === //
 // timsort: main loop
 var timSort = function (array, first, last, lessThan) {
     if (last - first <= 1) return array;
@@ -124,7 +124,7 @@ var whenMerge = function (state) {
     return pre2Run.length <= preRun.length + curRun.length;
 };
 
-// merge neighbor runs
+// merge two chunks
 var mergeTwoRuns = function (state) {
     if (state.runStack.length > 2 &&
         state.runStack[state.runStack.length - 3].length <
@@ -132,33 +132,28 @@ var mergeTwoRuns = function (state) {
         // merge last two runs if stack top run is larger than last two runs
         // e.g. run length of stack state changed as [..., 5,2,6] => [..., 7,6]
         var curRun = state.runStack.pop();
-        var mergerRun = state.runStack[state.runStack.length - 1];
-        var mergedRun = state.runStack[state.runStack.length - 2];
-        mergeNeighbor(
-            state.array, mergedRun.first, mergerRun.first, mergerRun.last, 
-            state);
-        // assert mergedRun.last === mergerRun.first
-        mergedRun.last = mergerRun.last;
-        mergedRun.length += mergerRun.length;
-        mergerRun.first = curRun.first;
-        mergerRun.last = curRun.last;
-        mergerRun.length = curRun.length;
-        // assert mergedRun.last === mergerRun.first
+        mergeHeadRuns(state);
+        state.runStack.push(curRun);
     } else {
-        var mergerRun = state.runStack.pop();
-        var mergedRun = state.runStack[state.runStack.length - 1];
-        // assert mergedRun.last === mergerRun.first
-        mergeNeighbor(
-            state.array, mergedRun.first, mergerRun.first, mergerRun.last, 
-            state);
-        mergedRun.last = mergerRun.last;
-        mergedRun.length += mergerRun.length;
+        mergeHeadRuns(state);
     }
+};
+
+// merge neighbor chunks and add two stacked runs to single run
+var mergeHeadRuns = function (state) {
+    var mergerRun = state.runStack.pop();
+    var mergedRun = state.runStack[state.runStack.length - 1];
+    // assert mergedRun.last === mergerRun.first
+    mergeNeighbor(
+        state.array, mergedRun.first, mergerRun.first, mergerRun.last, 
+        state);
+    mergedRun.last = mergerRun.last;
+    mergedRun.length += mergerRun.length;
 };
 
 
 
-// ===  [MERGE IMPROVEMENTS] === //
+// === [MERGE IMPROVEMENTS] === //
 
 // merge neighbor chunks
 var mergeNeighbor = function (array, first, connect, last, state) {
