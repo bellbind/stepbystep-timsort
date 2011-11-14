@@ -26,7 +26,8 @@ var mergeSort = function (array, first, last, lessThan) {
         // - no more chunk remained on array
         while (stack.length > 1 && 
                (remain >= last || 
-                stack[stack.length-2] < stack[stack.length-1].length * 2)) {
+                stack[stack.length-2].length < 
+                stack[stack.length-1].length * 2)) {
             var pre = stack[stack.length-2];
             var cur = stack.pop();
             // assert pre.last === cur.first
