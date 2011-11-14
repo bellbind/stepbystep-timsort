@@ -123,14 +123,34 @@ var whenMerge = function (state) {
 
 // merge neighbor
 var mergeTwoRuns = function (state) {
-    var mergerRun = state.runStack.pop();
-    var mergedRun = state.runStack[state.runStack.length - 1];
-    // assert mergedRun.last === mergerRun.first
-    mergeNeighbor(
-        state.array, mergedRun.first, mergerRun.first, mergerRun.last, 
-        state.lessThan);
-    mergedRun.last = mergerRun.last;
-    mergedRun.length += mergerRun.length;
+    if (state.runStack.length > 2 &&
+        state.runStack[state.runStack.length - 3].length <
+        state.runStack[state.runStack.length - 1].length) {
+        // merge last two runs if stack top run is larger than last two runs
+        // e.g. run length of stack state changed as [..., 5,2,6] => [..., 7,6]
+        var curRun = state.runStack.pop();
+        var mergerRun = state.runStack[state.runStack.length - 1];
+        var mergedRun = state.runStack[state.runStack.length - 2];
+        mergeNeighbor(
+            state.array, mergedRun.first, mergerRun.first, mergerRun.last, 
+            state.lessThan);
+        // assert mergedRun.last === mergerRun.first
+        mergedRun.last = mergerRun.last;
+        mergedRun.length += mergerRun.length;
+        mergerRun.first = curRun.first;
+        mergerRun.last = curRun.last;
+        mergerRun.length = curRun.length;
+        // assert mergedRun.last === mergerRun.first
+    } else {
+        var mergerRun = state.runStack.pop();
+        var mergedRun = state.runStack[state.runStack.length - 1];
+        // assert mergedRun.last === mergerRun.first
+        mergeNeighbor(
+            state.array, mergedRun.first, mergerRun.first, mergerRun.last, 
+            state.lessThan);
+        mergedRun.last = mergerRun.last;
+        mergedRun.length += mergerRun.length;
+    }
 };
 
 // same as merge function of merge sort 
