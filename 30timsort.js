@@ -119,7 +119,11 @@ var whenMerge = function (state) {
     // similar sized runs should be merged: it introduces log(n) merge count
     var curRun = state.runStack[state.runStack.length - 1];
     var preRun = state.runStack[state.runStack.length - 2];
-    return preRun.length < curRun.length * 2;
+    if (state.runStack.length === 2) {
+        return curRun.length < preRun.length;
+    }
+    var pre2Run = state.runStack[state.runStack.length - 3];
+    return preRun.length + curRun.length < pre2Run.length;
 };
 
 // merge neighbor runs

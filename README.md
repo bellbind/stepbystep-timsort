@@ -83,8 +83,8 @@ The ascendant run are already sorted.
 The descendant run shoud be reversed, so becomes also sorted part.
 
 Entire array parted sorted chunks.
-it is same as mid state of merge sort execution.
-So merging strategy and method of merge neighbor is same as merge sort.
+it is similar as mid state of merge sort execution.
+Merging strategy and method of merge neighbor is same as merge sort.
 
 The key is
 

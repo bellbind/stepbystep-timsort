@@ -1,7 +1,7 @@
 // Split Improvement: cutting chunk as monotonic ascendant sequence
 // - from single element chunks to monotonic ascendant sequences: "run"
 // - each "run" length is varied 
-//   - length may not be power2, but merging condition is same as merge sort
+//   - length may not be power2, but merging condition is similar as merge sort
 //   - it also efficent: O(Nlog(N))
 // - handling sequence has advantage for almost all sorted or reversed case
 
@@ -100,11 +100,13 @@ var whenMerge = function (state) {
     if (state.runStack.length <= 1) {
         return false;        
     }
-    
     var curRun = state.runStack[state.runStack.length - 1];
     var preRun = state.runStack[state.runStack.length - 2];
-    // similar sized runs should be merged: it introduces log(n) merge count
-    return preRun.length < curRun.length * 2;
+    if (state.runStack.length === 2) {
+        return curRun.length < preRun.length;
+    }
+    var pre2Run = state.runStack[state.runStack.length - 3];
+    return preRun.length + curRun.length < pre2Run.length;
 };
 
 // merge neighbor chunks and add two stacked runs to single run
