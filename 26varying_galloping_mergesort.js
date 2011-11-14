@@ -99,13 +99,13 @@ var mergeLeftGallopingMode = function (array, state, m) {
     var rval = m.right[m.rcur];
     if (state.lessThanEqual(lval, rval)) {
         // left(shorter) side gallop includes right side first (rightmost)
-        var end = gallopSearch(
+        var end = gallopFirstSearch(
             m.left, m.lcur, m.llast, rval, state.lessThan); // rightmost
         modeControlInGallopingMode(state, m, end - m.lcur);
         while (m.lcur < end) array[m.cur++] = m.left[m.lcur++];
     } else {
         // right(longer) side gallop excludes left side first (leftmost)
-        var end = gallopSearch(
+        var end = gallopFirstSearch(
             m.right, m.rcur, m.rlast, lval, state.lessThanEqual); // leftmost
         modeControlInGallopingMode(state, m, end - m.rcur);
         while (m.rcur < end) array[m.cur++] = m.right[m.rcur++];
@@ -181,22 +181,22 @@ var mergeRightGallopingMode = function (array, state, m) {
     var rval = m.right[m.rcur - 1];
     if (state.lessThan(rval, lval)) {
         // left(longer) side gallop excludes right side last (rightmost)
-        var begin = gallopSearch(
+        var begin = gallopLastSearch(
             m.left, m.lfirst, m.lcur - 1, rval, state.lessThan); // rightmost
         modeControlInGallopingMode(state, m, m.lcur - begin);
         while (begin < m.lcur) array[--m.cur] = m.left[--m.lcur];
     } else {
         // right(shorter) side gallop includes left side last (leftmost)
-        var begin = gallopSearch(
+        var begin = gallopLastSearch(
             m.right, m.rfirst, m.rcur, lval, state.lessThanEqual); // leftmost
         modeControlInGallopingMode(state, m, m.rcur - begin);
         while (begin < m.rcur) array[--m.cur] = m.right[--m.rcur];
     }
 };
 
-// binsearch for gallop mode
+// binsearch for gallop mode from first element side
 // search to one of regions [0,1) [1,3),[3,7),[7,15),...
-var gallopSearch = function (array, first, last, value, lessThan) {
+var gallopFirstSearch = function (array, first, last, value, lessThan) {
     var pre = 0;
     var offset = 1;
     while (first + offset < last) {
@@ -206,6 +206,21 @@ var gallopSearch = function (array, first, last, value, lessThan) {
     }
     var searchFirst = first + pre;
     var searchLast = (first + offset < last) ? first + offset : last;
+    return binSearch(array, searchFirst, searchLast, value, lessThan);
+};
+
+// binsearch for gallop mode from last element side
+// search to one of regions(from last) [-1,-0),[-3,-1),[-7,-3),[-15,-7),...
+var gallopLastSearch = function (array, first, last, value, lessThan) {
+    var pre = 0;
+    var offset = 1;
+    while (first < last - offset) {
+        if (!lessThan(value, array[last - offset])) break;
+        pre = offset;
+        offset = (offset << 1) + 1;
+    }
+    var searchFirst = (first < last - offset) ? last - offset : first;
+    var searchLast = last - pre;
     return binSearch(array, searchFirst, searchLast, value, lessThan);
 };
 
