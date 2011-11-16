@@ -7,6 +7,8 @@ Understanding timsort features by implementing step by step manner.
 All imprementations are written by JavaScript.
 It can be written as compact code, 
 and has primitive functionoalities: e.g. shift ops, for loop.
+Notice that the codes are not faster than native Array.sort really.
+
 
 Implementation files has numbering file name.
 Each implementation is improvement of former implementation.
