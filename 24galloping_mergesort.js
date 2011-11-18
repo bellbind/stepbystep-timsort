@@ -103,13 +103,13 @@ var mergeLeftGallopingMode = function (array, state, m) {
     if (state.lessThanEqual(lval, rval)) {
         // left(shorter) side gallop includes right side first (rightmost)
         var end = binSearch(
-            m.left, m.lcur, m.llast, rval, state.lessThan); // rightmost
+            m.left, m.lcur + 1, m.llast, rval, state.lessThan);
         modeControlInGallopingMode(m, end - m.lcur);
         while (m.lcur < end) array[m.cur++] = m.left[m.lcur++];
     } else {
         // right(longer) side gallop excludes left side first (leftmost)
         var end = binSearch(
-            m.right, m.rcur, m.rlast, lval, state.lessThanEqual); // leftmost
+            m.right, m.rcur + 1, m.rlast, lval, state.lessThanEqual);
         modeControlInGallopingMode(m, end - m.rcur);
         while (m.rcur < end) array[m.cur++] = m.right[m.rcur++];
     }
@@ -181,13 +181,13 @@ var mergeRightGallopingMode = function (array, state, m) {
     if (state.lessThan(rval, lval)) {
         // left(longer) side gallop excludes right side last (rightmost)
         var begin = binSearch(
-            m.left, m.lfirst, m.lcur - 1, rval, state.lessThan); // rightmost
+            m.left, m.lfirst, m.lcur - 1, rval, state.lessThan);
         modeControlInGallopingMode(m, m.lcur - begin);
         while (begin < m.lcur) array[--m.cur] = m.left[--m.lcur];
     } else {
         // right(shorter) side gallop includes left side last (leftmost)
         var begin = binSearch(
-            m.right, m.rfirst, m.rcur, lval, state.lessThanEqual); // leftmost
+            m.right, m.rfirst, m.rcur - 1, lval, state.lessThanEqual); 
         modeControlInGallopingMode(m, m.rcur - begin);
         while (begin < m.rcur) array[--m.cur] = m.right[--m.rcur];
     }
