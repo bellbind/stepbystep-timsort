@@ -32,32 +32,32 @@ public class Bench {
         start = System.currentTimeMillis();
         sortObj.sort(data.natRandom);
         end = System.currentTimeMillis();
-        if (!warmup) puts("[" + name + "] natRandom " + (end - start)  + "ns");
+        if (!warmup) puts("[" + name + "] natRandom " + (end - start)  + "ms");
         
         start = System.currentTimeMillis();
         sortObj.sort(data.natAsc);
         end = System.currentTimeMillis();
-        if (!warmup) puts("[" + name + "] natAsc " + (end - start) + "ns");
+        if (!warmup) puts("[" + name + "] natAsc " + (end - start) + "ms");
         
         start = System.currentTimeMillis();
         sortObj.sort(data.natDesc);
         end = System.currentTimeMillis();
-        if (!warmup) puts("[" + name + "] natDesc " + (end - start) + "ns");
+        if (!warmup) puts("[" + name + "] natDesc " + (end - start) + "ms");
         
         start = System.currentTimeMillis();
         sortObj.sort(data.objRandom, data.relation);
         end = System.currentTimeMillis();
-        if (!warmup) puts("[" + name + "] objRandom " + (end - start) + "ns");
+        if (!warmup) puts("[" + name + "] objRandom " + (end - start) + "ms");
         
         start = System.currentTimeMillis();
         sortObj.sort(data.objAsc, data.relation);
         end = System.currentTimeMillis();
-        if (!warmup) puts("[" + name + "] objAsc " + (end - start) + "ns");
+        if (!warmup) puts("[" + name + "] objAsc " + (end - start) + "ms");
         
         start = System.currentTimeMillis();
         sortObj.sort(data.objDesc, data.relation);
         end = System.currentTimeMillis();
-        if (!warmup) puts("[" + name + "] objDesc " + (end - start) + "ns");
+        if (!warmup) puts("[" + name + "] objDesc " + (end - start) + "ms");
     }
     
     static class Data {
