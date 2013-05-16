@@ -208,10 +208,10 @@ to timsort until 14improve_minrun_timsort.js.
 ## License
 
 All of the improvement step code is written with non-C language from scratch 
-to reconstruct my understanding of the timsort mechanism descrived at
+to reconstruct my understanding of the timsort mechanisms described at
 [the articles of understanding timsort](https://github.com/DRMacIver/understanding-timsort).
 
-Every codes of the steps are published 
+Every code of the steps is published 
 to the [Public Domain](http://creativecommons.org/licenses/publicdomain/).
 
 ## resources
