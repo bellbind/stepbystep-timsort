@@ -205,6 +205,15 @@ This improvement makes continuous count of mode switching variable.
 It is mixed merge improvements until 26varying_galloping_mergesort.js 
 to timsort until 14improve_minrun_timsort.js.
 
+## License
+
+All of the improvement step code is written with non-C language from scratch 
+to reconstruct my understanding of the timsort mechanism descrived at
+[the articles of understanding timsort](https://github.com/DRMacIver/understanding-timsort).
+
+Every codes of the steps are published 
+to the [Public Domain](http://creativecommons.org/licenses/publicdomain/).
+
 ## resources
 
 - [http://en.wikipedia.org/wiki/Timsort](http://en.wikipedia.org/wiki/Timsort)
