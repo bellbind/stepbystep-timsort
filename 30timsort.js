@@ -121,7 +121,7 @@ var whenMerge = function (state) {
     var preRun = state.runStack[state.runStack.length - 2];
     if (state.runStack.length === 2) return preRun.length <= curRun.length;
     var pre2Run = state.runStack[state.runStack.length - 3];
-    if (curRun.length === preRun.length){return true;}
+    if (curRun.length >= preRun.length){return true;}
     return pre2Run.length <= preRun.length + curRun.length;
 };
 
